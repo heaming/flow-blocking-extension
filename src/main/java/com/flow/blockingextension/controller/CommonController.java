@@ -43,8 +43,6 @@ public class CommonController {
         cookie.setMaxAge(60*60*24*365);
         response.addCookie(cookie);
 
-        // tokenService.addToken(token);
-
         return "index.html";
     }
 

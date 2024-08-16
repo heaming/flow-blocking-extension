@@ -187,7 +187,6 @@ const deleteUserExtension = async (v) => {
 const updateFixedExtensions = async () => {
 
   const extensionIds = fixedExtensionSelected.value.map(i => i.id ? i.id : i);
-  console.log(extensionIds);
 
   const data = JSON.stringify({
     "token": token.value,
@@ -272,13 +271,10 @@ const updateUserExtension = async (v) => {
 const setExtension = () => {
   for(let i=0; i<arr.value.length; i++) {
     arr.value[i] = "false";
-    console.log(arr.value[i])
   }
 
   fixedExtensionSelected.value = savedExtensions.value.filter(item => item.extensionType === 'FIXED')
-  console.log(fixedExtensionSelected.value)
   fixedExtensionSelected.value.forEach(e => {
-    console.log(arr.value[e.id]);
     arr.value[e.id] = "true";
   });
 
@@ -312,8 +308,16 @@ const onClickAdd = async () => {
     }
     inputValue.value = "";
   } else {
+
+
+    if(savedExtensions.value.filter(saved => inputValue.value == saved.title).length > 0) {
+      inputValue.value = "";
+      return;
+    }
+
     if (customExtensions.value.length >= 200) {
       alert('커스텀 확장자는 200개 이상 저장할 수 없습니다.');
+      inputValue.value = "";
       return;
     }
 
@@ -359,7 +363,6 @@ const reset = async () => {
  * @param error
  */
 const errorHandler = (error) => {
-  console.log(error.response.data.code)
   if(error.response.data.code.startsWith("E")) {
     alert(error.response.data.message);
   } else {
