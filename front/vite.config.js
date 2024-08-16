@@ -24,7 +24,7 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/api/v1' : {
-        target: 'http://3.37.36.201:8080',
+        target: 'http://ec2-3-39-46-173.ap-northeast-2.compute.amazonaws.com:8080',
         changeOrigin: true,
         // rewrite: (path) => path.replace(/^\/api\/v1/,'')
       },

@@ -11,7 +11,12 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedHeaders("*")
                 .allowedMethods("*")
-                .allowedOrigins("http://3.37.36.201:8080")
+                .allowedOrigins("http://ec2-3-39-46-173.ap-northeast-2.compute.amazonaws.com:8080")
+                .allowedOrigins("https://ec2-3-39-46-173.ap-northeast-2.compute.amazonaws.com:8080")
+                .allowedOrigins("http://ec2-3-39-46-173.ap-northeast-2.compute.amazonaws.com")
+                .allowedOrigins("https://ec2-3-39-46-173.ap-northeast-2.compute.amazonaws.com")
+                .allowedOrigins("http://ec2-3-39-46-173.ap-northeast-2.compute.amazonaws.com:80")
+                .allowedOrigins("https://ec2-3-39-46-173.ap-northeast-2.compute.amazonaws.com:80")
                 .allowCredentials(true);
     }
 }

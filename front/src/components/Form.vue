@@ -101,6 +101,7 @@ onBeforeMount(() => {
 })
 
 /**
+ *
  * @description 고정 확장자 조회 API
  * @returns {Promise<void>}
  */
