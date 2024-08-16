@@ -6,6 +6,8 @@ import com.flow.blockingextension.dto.UserExtensionUpdateRequest;
 import com.flow.blockingextension.dto.UserFixedExtensionAddRequest;
 import com.flow.blockingextension.model.Extension;
 import com.flow.blockingextension.model.ExtensionType;
+import com.flow.blockingextension.model.Subscribe;
+import com.flow.blockingextension.respository.SubscribeJpaRepository;
 import com.flow.blockingextension.service.BlockingExtensionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -58,6 +60,12 @@ public class BlockingExtensionController {
     @PutMapping("/blocking-extensions/user")
     public ResponseEntity<List<Extension>> deleteUserExtension(@RequestBody UserExtensionDeleteRequest request) {
         List<Extension> list = extensionService.deleteUserExtension(request.token(), request.extensionId());
+        return ResponseEntity.ok(list);
+    }
+
+    @GetMapping("/blocking-extensions/reset")
+    public ResponseEntity<List<Extension>> deleteAllUserExtenion(@RequestParam String token) {
+        List<Extension> list = extensionService.deleteAllUserExtension(token);
         return ResponseEntity.ok(list);
     }
 

@@ -17,5 +17,6 @@ public interface SubscribeJpaRepository extends JpaRepository<Subscribe, Long> {
     @Transactional(rollbackFor = Exception.class)
     Optional<Void> deleteSubscribeByTokenAndExtensionId(String token, Long extensionId);
     Optional<Subscribe> findSubscribeByTokenAndExtensionId(String token, Long extensionId);
-
+    @Transactional(rollbackFor = Exception.class)
+    Optional<Void> deleteAllByToken(String token);
 }

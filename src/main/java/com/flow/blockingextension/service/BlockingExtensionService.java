@@ -92,7 +92,7 @@ public class BlockingExtensionService {
             return getUserExtensions(token);
 
         } catch (ApplicationException ex) {
-            throw FAIL_SAVING.build();
+            throw FAIL_DELETING.build();
         }
 
     }
@@ -197,4 +197,9 @@ public class BlockingExtensionService {
         return getUserExtensions(token);
     }
 
+    public List<Extension> deleteAllUserExtension(String token) {
+        subscribeJpaRepository.deleteAllByToken(token).orElseThrow(FAIL_DELETING::build);
+
+        return getUserExtensions(token);
+    }
 }

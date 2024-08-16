@@ -1,14 +1,14 @@
 version: '3.7'
 services:
-  redis:
-    container_name: flow-redis
-    image: redis:7.2-alpine
-    command: redis-server --port 6380
-    labels:
-      - "name=redis"
-      - "mode=standalone"
-    ports:
-      - 6380:6380
+#  redis:
+#    container_name: flow-redis
+#    image: redis:7.2-alpine
+#    command: redis-server --port 6380
+#    labels:
+#      - "name=redis"
+#      - "mode=standalone"
+#    ports:
+#      - 6380:6380
   mysql:
     container_name: flow-mysql
     image: ubuntu/mysql:edge

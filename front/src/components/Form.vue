@@ -62,12 +62,18 @@
          </div>
         </BCardGroup>
       </BCol>
-<!--      <BRow class="m-0" style="text-align: end">-->
-<!--        <BCol>-->
-<!--          <BBadge @click="getToken" class="me-1" size="sm" variant="secondary" pill>초기화</BBadge>-->
-<!--          <BBadge class="me-1" size="sm" variant="danger" pill>쿠키 삭제</BBadge>-->
-<!--        </BCol>-->
-<!--      </BRow>-->
+<!--    <BRow class="m-0" style="text-align: end">-->
+<!--      <BCol>-->
+<!--        <BBadge-->
+<!--            @click="reset()"-->
+<!--            class="me-1"-->
+<!--            size="sm"-->
+<!--            variant="secondary"-->
+<!--            pill>-->
+<!--          초기화-->
+<!--        </BBadge>-->
+<!--      </BCol>-->
+<!--    </BRow>-->
     </BRow>
   </BContainer>
 </template>
@@ -168,7 +174,7 @@ const deleteUserExtension = async (v) => {
       setExtension();
     })
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
     await getUserExtension();
   }
 }
@@ -199,7 +205,7 @@ const updateFixedExtensions = async () => {
         }
     )
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
     await getUserExtension();
   }
 }
@@ -226,7 +232,7 @@ const updateFixedExtension = async (v) => {
         }
     )
   } catch (error) {
-    console.log(error);
+    errorHandler(error);
     await getUserExtension();
   }
 }
@@ -254,7 +260,7 @@ const updateUserExtension = async (v) => {
           }
       )
     } catch (error) {
-      console.log(error);
+      errorHandler(error);
       await getUserExtension();
     }
 }
@@ -265,10 +271,13 @@ const updateUserExtension = async (v) => {
 const setExtension = () => {
   for(let i=0; i<arr.value.length; i++) {
     arr.value[i] = "false";
+    console.log(arr.value[i])
   }
 
   fixedExtensionSelected.value = savedExtensions.value.filter(item => item.extensionType === 'FIXED')
+  console.log(fixedExtensionSelected.value)
   fixedExtensionSelected.value.forEach(e => {
+    console.log(arr.value[e.id]);
     arr.value[e.id] = "true";
   });
 
@@ -277,28 +286,27 @@ const setExtension = () => {
 }
 
 /**
- * @description 입력 길이 validation check
- * @returns {boolean}
- */
-const invalidLength = () => {
-  return inputValue.value.length > 20
-}
-
-/**
  * @description 추가 버튼 클릭 이벤트
  * @returns {Promise<void>}
  */
 const onClickAdd = async () => {
 
-  if(invalidLength()) {
-    alert("최대 입력 길이는 20자 입니다.")
+  inputValue.value = inputValue.value.trim();
+
+  if(inputValue.value.length > 20) {
+    alert("최대 입력 길이는 20자 입니다.");
+    return;
+  }
+
+  if(inputValue.value.length == 0) {
+    alert("내용을 입력하세요");
     return;
   }
 
   // 고정 확장자인 경우 확인
   let dupled = fixedExtensionOptions.value.filter(fixed => fixed.title == inputValue.value);
   if(dupled.length > 0) {
-    if(!fixedExtensionSelected.value.includes(dupled[0].id)) {
+    if(savedExtensions.value.filter(saved => saved.title == inputValue.value) <= 0) {
       await updateFixedExtension(dupled[0].id);
     }
     inputValue.value = "";
@@ -325,5 +333,37 @@ const onClickRemove = async (e, v) => {
   await deleteUserExtension(v);
 }
 
+/**
+ * @description reset 이벤트
+ * @returns {Promise<void>}
+ */
+const reset = async () => {
+  if(token.value == null || token.value.length <= 0) {
+    await setToken();
+  }
+
+  try {
+    await axios.get(`/api/v1/blocking-extensions/reset?token=${token.value}`)
+      .then((res) =>{
+          savedExtensions.value = res.data;
+      }).then(res => setExtension())
+  } catch (error) {
+    errorHandler(error);
+    await getUserExtension();
+  }
+}
+
+/**
+ * @default 에러 핸들러
+ * @param error
+ */
+const errorHandler = (error) => {
+  console.log(error.response.data.code)
+  if(error.response.data.code.startsWith("E")) {
+    alert(error.response.data.message);
+  } else {
+    alert(error);
+  }
+}
 
 </script>
