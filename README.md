@@ -2,6 +2,8 @@
 
 파일 첨부 시 문제가 될 수 있는 확장자를 차단하기 위한 시스템
 
+<br/>
+
 ## **요구사항**
 
 - **고정 확장자**
@@ -13,24 +15,31 @@
     - 최대 200개 추가
     - `추가`버튼과 `x`버튼을 통해 저장
 
-## **Architecture**
+<br/>
 
+## **Architecture**
 ### Tech Stack
 
 - Open JDK 17, Spring Boot 3.3.2, Spring JPA, MySql8, Docker
 - Javascript ES6, Vue3, vite, Bootstrap-vue-next
 - AWS, Git
 
+<br/>
+
 ### Spring MVC - REST API
 
 - Rest API를 사용한 비동기 통신 방식
 - Example) /api/v1/blocking-extensions/{id}
 
-  ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/cc7edd20-70ec-4af7-b4ef-7323fe8266da/309f3f45-4359-4e46-9c50-4791b57865cc/image.png)
+![image](https://github.com/user-attachments/assets/a428c495-dbc8-4db7-a143-ea0c0edf2d51)
+
+<br/>
 
 ### DB 구조
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/cc7edd20-70ec-4af7-b4ef-7323fe8266da/2a7ae69d-100a-495f-a7ff-ca10bae4b65e/image.png)
+![image](https://github.com/user-attachments/assets/3a0dedb2-8b36-48a0-8be4-2a2deb132f51)
+
+<br/>
 
 ## 추가 고려사항
 
@@ -43,12 +52,15 @@
     1. 고정 확장자인 경우 → 입력 확장자와 일치한 고정 확장자 check
     2. 커스텀 확장자인 경우 → 신규 등록
 
-### `@RestControllerAdvice`를 활용한 공통 에러 코드 관리
+<br/>
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/cc7edd20-70ec-4af7-b4ef-7323fe8266da/6589a9bd-a820-45bf-b375-6f08307d5772/image.png)
+### `@RestControllerAdvice`를 활용한 공통 에러 코드 관리
+![image](https://github.com/user-attachments/assets/86c6cc2a-b0dc-4bb6-8a71-c1024b076387)
+
+<br/>
 
 ### 쿠키를 토큰으로 활용
 
 User Service가 없는 환경이므로, 초기 진입 시 SessionId를 쿠키에 저장에 token으로 활용
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/cc7edd20-70ec-4af7-b4ef-7323fe8266da/7726d169-628e-4f63-abe8-7b88044142ca/image.png)
+![image](https://github.com/user-attachments/assets/ede04f60-034f-409a-af1f-d5a062a537f7)
